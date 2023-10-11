@@ -1,7 +1,7 @@
 # taller-go
 
 
-## **Packages**
+## Packages
 
 - Every Go program is made up of packages.
 - Programs start running in package main.
@@ -21,7 +21,7 @@ func main() {
 ```
 
 
-## **Exported names**
+## Exported names
 
 In Go, a name is exported if it begins with a capital letter. For example, Pizza is an exported name, as is Pi, which is exported from the math package.
 
@@ -42,7 +42,7 @@ func main() {
 }
 
 ```
-## **Functions**
+## Functions
 
 A function can take zero or more arguments.
 
@@ -118,7 +118,8 @@ func main() {
 ```
 
 
-## **Variables**
+## Variables
+
 The var statement declares a list of variables; as in function argument lists, the type is last.
 
 A var statement can be at package or function level. We see both in this example.
@@ -195,6 +196,7 @@ func main() {
 ```
 
 ## Basic types
+
 Go's basic types are
 
 ```
@@ -301,6 +303,7 @@ func main() {
 ```
 
 ## Constants
+
 Constants are declared like variables, but with the const keyword.
 
 Constants can be character, string, boolean, or numeric values.
@@ -359,7 +362,62 @@ func main() {
 }
 ```
 
+## If
+
+Go's `if` statements need not be surrounded by parentheses `( )` but the braces `{ }` are required.
+```
+package main
+
+import (
+	"fmt"
+	"math"
+)
+
+func sqrt(x float64) string {
+	if x < 0 {
+		return sqrt(-x) + "i"
+	}
+	return fmt.Sprint(math.Sqrt(x))
+}
+
+func main() {
+	fmt.Println(sqrt(2), sqrt(-4))
+}
+```
+
+#### If with a short statement
+Like `for`, the `if` statement can start with a short statement to execute before the condition.
+
+Variables declared by the statement are only in scope until the end of the `if`.
+
+(Try using `v` in the last `return` statement.)
+
+```
+package main
+
+import (
+	"fmt"
+	"math"
+)
+
+func pow(x, n, lim float64) float64 {
+	if v := math.Pow(x, n); v < lim {
+		return v
+	}
+	return lim
+}
+
+func main() {
+	fmt.Println(
+		pow(3, 2, 10),
+		pow(3, 3, 20),
+	)
+}
+
+```
+
 ## For
+
 Go has only one looping construct, the `for` loop.
 
 The basic `for` loop has three components separated by semicolons:
@@ -384,6 +442,51 @@ func main() {
 		sum += i
 	}
 	fmt.Println(sum)
+}
+```
+
+The init and post statements are optional.
+
+```
+package main
+
+import "fmt"
+
+func main() {
+	sum := 1
+	for ; sum < 1000; {
+		sum += sum
+	}
+	fmt.Println(sum)
+}
+```
+
+#### For is Go's "while"
+
+At that point you can drop the semicolons: C's `while` is spelled `for` in Go.
+
+```
+package main
+
+import "fmt"
+
+func main() {
+	sum := 1
+	for sum < 1000 {
+		sum += sum
+	}
+	fmt.Println(sum)
+}
+```
+
+Don't do the following(If you omit the loop condition it loops forever):
+
+```
+package main
+
+func main() {
+	for {
+	}
 }
 ```
 
