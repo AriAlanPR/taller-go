@@ -863,3 +863,93 @@ The zero value of a slice is `nil`.
 
 A nil slice has a length and capacity of 0 and has no underlying array.
 
+Creating a slice with make
+Slices can be created with the built-in make function; this is how you create dynamically-sized arrays.
+
+The make function allocates a zeroed array and returns a slice that refers to that array:
+
+`a := make([]int, 5)  // len(a)=5`
+
+To specify a capacity, pass a third argument to make:
+
+```
+b := make([]int, 0, 5) // len(b)=0, cap(b)=5
+
+b = b[:cap(b)] // len(b)=5, cap(b)=5
+b = b[1:]      // len(b)=4, cap(b)=4
+```
+
+Slices can contain any type, including other slices.
+
+```
+board := [][]string{
+		[]string{"_", "_", "_"},
+		[]string{"_", "_", "_"},
+		[]string{"_", "_", "_"},
+	}
+```
+
+#### Appending to a slice
+It is common to append new elements to a slice, and so Go provides a built-in `append` function.
+
+`func append(s []T, vs ...T) []T`
+The first parameter `s` of append is a slice of type `T`, and the rest are `T` values to append to the slice.
+
+The resulting value of append is a slice containing all the elements of the original slice plus the provided values.
+
+If the backing array of `s` is too small to fit all the given values a bigger array will be allocated. The returned slice will point to the newly allocated array.
+
+```
+package main
+
+import "fmt"
+
+func main() {
+	var s []int
+	printSlice(s)
+
+	// append works on nil slices.
+	s = append(s, 0)
+	printSlice(s)
+
+	// The slice grows as needed.
+	s = append(s, 1)
+	printSlice(s)
+
+	// We can add more than one element at a time.
+	s = append(s, 2, 3, 4)
+	printSlice(s)
+}
+
+func printSlice(s []int) {
+	fmt.Printf("len=%d cap=%d %v\n", len(s), cap(s), s)
+}
+```
+## Range
+The `range` form of the `for` loop iterates over a slice or map.
+
+When ranging over a slice, two values are returned for each iteration. The first is the index, and the second is a copy of the element at that index.
+
+```
+package main
+
+import "fmt"
+
+var pow = []int{1, 2, 4, 8, 16, 32, 64, 128}
+
+func main() {
+	for i, v := range pow {
+		fmt.Printf("2**%d = %d\n", i, v)
+	}
+}
+```
+You can skip the index or value by assigning to _.
+
+```
+for i, _ := range pow
+for _, value := range pow
+```
+If you only want the index, you can omit the second variable.
+
+`for i := range pow`
+
