@@ -66,10 +66,14 @@ func main() {
 
 When two or more consecutive named function parameters share a type, you can omit the type from all but the last.
 
-In this example, is shortened to
-`x int, y int`
-
-`x, y int`
+In this example, is shortened
+```
+x int, y int
+```
+to
+```
+x, y int
+```
 
 A function can return any number of results.
 
