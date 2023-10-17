@@ -365,6 +365,7 @@ func main() {
 ## If
 
 Go's `if` statements need not be surrounded by parentheses `( )` but the braces `{ }` are required.
+
 ```
 package main
 
@@ -709,6 +710,7 @@ func main() {
 	fmt.Println(primes)
 }
 ```
+
 ## Slices
 An array has a fixed size. A slice, on the other hand, is a dynamically-sized, flexible view into the elements of an array. In practice, slices are much more common than arrays.
 
@@ -716,12 +718,17 @@ The type `[]T` is a slice with elements of type `T`.
 
 A slice is formed by specifying two indices, a low and high bound, separated by a colon:
 
-`a[low : high]`
+```
+a[low : high]
+```
+
 This selects a half-open range which includes the first element, but excludes the last one.
 
 The following expression creates a slice which includes elements 1 through 3 of `a`:
 
-`a[1:4]`
+```
+a[1:4]
+```
 
 ```
 package main
@@ -735,7 +742,6 @@ func main() {
 	fmt.Println(s)
 }
 ```
-
 
 #### Slices are like references to arrays
 A slice does not store any data, it just describes a section of an underlying array.
@@ -767,15 +773,20 @@ func main() {
 	fmt.Println(names)
 }
 ```
+
 #### Slice literals
 A slice literal is like an array literal without the length.
 
 This is an array literal:
 
-`[3]bool{true, true, false}`
+```
+[3]bool{true, true, false}
+```
 And this creates the same array as above, then builds a slice that references it:
 
-`[]bool{true, true, false}`
+```
+[]bool{true, true, false}
+```
 
 ```
 package main
@@ -811,7 +822,10 @@ The default is zero for the low bound and the length of the slice for the high b
 
 For the array
 
-`var a [10]int`
+```
+var a [10]int
+```
+
 these slice expressions are equivalent:
 
 ```
@@ -868,7 +882,9 @@ Slices can be created with the built-in make function; this is how you create dy
 
 The make function allocates a zeroed array and returns a slice that refers to that array:
 
-`a := make([]int, 5)  // len(a)=5`
+```
+a := make([]int, 5)  // len(a)=5
+```
 
 To specify a capacity, pass a third argument to make:
 
@@ -892,7 +908,10 @@ board := [][]string{
 #### Appending to a slice
 It is common to append new elements to a slice, and so Go provides a built-in `append` function.
 
-`func append(s []T, vs ...T) []T`
+```
+func append(s []T, vs ...T) []T
+```
+
 The first parameter `s` of append is a slice of type `T`, and the rest are `T` values to append to the slice.
 
 The resulting value of append is a slice containing all the elements of the original slice plus the provided values.
@@ -951,5 +970,68 @@ for _, value := range pow
 ```
 If you only want the index, you can omit the second variable.
 
-`for i := range pow`
+```
+for i := range pow
+```
+
+## Maps
+A map maps keys to values.
+
+The zero value of a map is nil. A nil map has no keys, nor can keys be added.
+
+The make function returns a map of the given type, initialized and ready for use.
+
+```
+package main
+
+import "fmt"
+
+type Vertex struct {
+	Lat, Long float64
+}
+
+var m map[string]Vertex
+
+func main() {
+	m = make(map[string]Vertex)
+	m["Bell Labs"] = Vertex{
+		40.68433, -74.39967,
+	}
+	fmt.Println(m["Bell Labs"])
+}
+```
+Mutating Maps
+Insert or update an element in map m:
+
+```
+m[key] = elem
+```
+
+Retrieve an element:
+
+```
+elem = m[key]
+```
+
+Delete an element:
+
+```
+delete(m, key)
+```
+
+Test that a key is present with a two-value assignment:
+
+```
+elem, ok = m[key]
+```
+
+If key is in m, ok is true. If not, ok is false.
+
+If key is not in the map, then elem is the zero value for the map's element type.
+
+Note: If elem or ok have not yet been declared you could use a short declaration form:
+
+```
+elem, ok := m[key]
+```
 
