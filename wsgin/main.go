@@ -1,6 +1,7 @@
 package main
 
 import (
+	"strconv"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -72,16 +73,22 @@ func postDigimons(c *gin.Context) {
 // getDigimonByID locates the digimon whose ID value matches the id
 // parameter sent by the client, then returns that digimon as a response.
 func getDigimonByID(c *gin.Context) {
-    id := c.Param("id")
-
-    // Loop over the list of digimons, looking for a digimon whose ID value matches the parameter.
-	// If it’s found, you serialize that digimon struct to JSON and return it as a response with a 200 OK HTTP code
-    for _, d := range digimons {
-        if d.ID == id {
-            c.IndentedJSON(http.StatusOK, d)
-            return
-        }
-    }
+    id, iderr := strconv.Atoi(c.Param("id"))
+	
+	// If there’s an error in parsing the `id` parameter as an integer, return a 400 Bad Request error.
+	if iderr == nil {
+		// Loop over the list of digimons, looking for a digimon whose ID value matches the parameter.
+		// If it’s found, you serialize that digimon struct to JSON and return it as a response with a 200 OK HTTP code
+		for _, d := range digimons {
+			if d.ID == id {
+				c.IndentedJSON(http.StatusOK, d)
+				return
+			}
+		}
+	} else {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": "invalid id"})
+		return
+	}
 
 	// Return an HTTP 404 error with http.StatusNotFound if the digimon isn’t found.
     c.IndentedJSON(http.StatusNotFound, gin.H{"message": "digimon not found"})
