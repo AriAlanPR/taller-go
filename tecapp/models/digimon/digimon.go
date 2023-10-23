@@ -1,4 +1,4 @@
-package models
+package digimon
 
 type digimon struct {
 	ID             int    `json:"id"`
@@ -10,8 +10,10 @@ type digimon struct {
 	NextEvolution  int    `json:"nextEvolution"`
 }
 
+type DigimonList []digimon
+
 // digimons slice to seed record digimon data.
-var digimons = []digimon{
+var Digimons = DigimonList{
 	{ID: 1047, Name: "War Greymon (X-Antibody)", Level: 4, Stage: "Ultimate", Attribute: "Vaccine", PriorEvolution: 76, NextEvolution: 1309},
 	{ID: 771, Name: "Lucemon", Level: 7, Stage: "Child", Attribute: "Vaccine", PriorEvolution: 833, NextEvolution: 879},
 	{ID: 746, Name: "Punimon", Level: 5, Stage: "Baby I", Attribute: "Data", PriorEvolution: -1, NextEvolution: 1154},
@@ -28,17 +30,16 @@ var digimons = []digimon{
 //     "nextEvolution": 560
 // }
 
-func getDigimons() []digimon {
-	return digimons
+func (dl DigimonList) Get() DigimonList {
+	return dl
 }
 
-func newDigimon() digimon {
-	var newDigimon digimon
-	return newDigimon
+func (dl DigimonList) New() digimon {
+	return digimon{}
 }
 
-func saveDigimon(digimon digimon) {
+func (dl DigimonList) Save(d digimon) DigimonList {
 	// Add the new digimon to the slice.
-	digimons = append(digimons, digimon)
-	return
+	Digimons = append(dl, d)
+	return Digimons
 }

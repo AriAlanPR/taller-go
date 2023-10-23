@@ -3,6 +3,7 @@ package main
 
 import (
 	"net/http"
+	"tecapp/controllers/digimoncontroller"
 
 	"github.com/gin-gonic/gin"
 )
@@ -16,13 +17,45 @@ func main() {
 	router.LoadHTMLGlob("views/*")
 
 	//define main digimon route
-	router.GET("/digimon", func(c *gin.Context) {
+	router.GET("/hello", func(c *gin.Context) {
 		c.HTML(
 			http.StatusOK,
 			"index.html",
 			gin.H{"title": "TecApp"},
 		)
 	})
+
+	//Digimons Routes
+	//define digimons HTML routes
+	//route to get main digimons view
+	router.GET("/digimons", digimoncontroller.Index)
+	//route to get a specific digimon view by id
+	router.GET("/digimons/:id", digimoncontroller.Index)
+
+	//define digimons JSON routes
+	// Use the GET function to associate the GET HTTP method and /digimons path with a handler function.
+	router.GET("/digimons/json", digimoncontroller.GetDigimonsJSON)
+	// Associate the /digimons/:id path with the getDigimonByID function. In Gin, the colon preceding an item in the
+	// path signifies that the item is a path parameter.
+	router.GET("/digimons/json/:id", digimoncontroller.GetDigimonJSONByID)
+	// Associate the POST method at the /digimons path with the postDigimons function.
+	router.POST("/digimons/json", digimoncontroller.PostDigimon)
+
+	//Pokemons Routes
+	//define pokemons HTML routes
+	//route to get main pokemons view
+	router.GET("/pokemons", digimoncontroller.Index)
+	//route to get a specific pokemon view by id
+	router.GET("/pokemons/:id", digimoncontroller.Index)
+
+	//define digimons JSON routes
+	// Use the GET function to associate the GET HTTP method and /pokemons path with a handler function.
+	router.GET("/pokemons/json", digimoncontroller.GetDigimonsJSON)
+	// Associate the /digimons/:id path with the getPokemonByID function. In Gin, the colon preceding an item in the
+	// path signifies that the item is a path parameter.
+	router.GET("/pokemons/json/:id", digimoncontroller.GetDigimonJSONByID)
+	// Associate the POST method at the /pokemons path with the postDigimons function.
+	router.POST("/pokemons/json", digimoncontroller.PostDigimon)
 
 	//Start and run the server
 	router.Run("localhost:3000")
