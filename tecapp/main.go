@@ -44,17 +44,15 @@ func main() {
 	//define pokemons HTML routes
 	//route to get main pokemons view
 	router.GET("/pokemons", pokemoncontroller.Index)
-	//route to get a specific pokemon view by id
-	router.GET("/pokemons/:id", pokemoncontroller.Index)
 
 	//define digimons JSON routes
 	// Use the GET function to associate the GET HTTP method and /pokemons path with a handler function.
-	router.GET("/pokemons/json", pokemoncontroller.GetDigimonsJSON)
+	router.GET("/pokemons/json", pokemoncontroller.GetPokemonsJSON)
 	// Associate the /digimons/:id path with the getPokemonByID function. In Gin, the colon preceding an item in the
 	// path signifies that the item is a path parameter.
-	router.GET("/pokemons/json/:id", pokemoncontroller.GetDigimonJSONByID)
+	router.GET("/pokemons/json/:id", pokemoncontroller.GetPokemonJSONByID)
 	// Associate the POST method at the /pokemons path with the postDigimons function.
-	router.POST("/pokemons/json", pokemoncontroller.PostDigimon)
+	router.POST("/pokemons/json", pokemoncontroller.PostPokemon)
 
 	//Start and run the server
 	router.Run("localhost:3000")

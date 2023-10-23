@@ -6,30 +6,53 @@
         <thead class="thead-dark">
             <tr>
                 {{ if eq .IsPokemon true }}
-                <th>ID</th>
-                <th>Name</th>
-                <th>Level</th>
-                <th>Stage</th>
-                <th>Attribute</th>
-                <th>Prior Evolution</th>
-                <th>Next Evolution</th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Ability</th>
+                    <th>Type</th>
+                    <th>Prior Evolution</th>
+                    <th>Next Evolution</th>
+                    <th>Picture</th>
                 {{ else }}
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Level</th>
+                    <th>Stage</th>
+                    <th>Attribute</th>
+                    <th>Prior Evolution</th>
+                    <th>Next Evolution</th>
+                    <th>Picture</th>
                 {{end}}
             </tr>
         </thead>
         <tbody>
             <!-- Add more rows as needed -->
-            {{range .list }}
-                <tr>
-                    <th>{{ .ID }}</th>
-                    <th>{{ .Name }}</th>
-                    <th>{{ .Level }}</th>
-                    <th>{{ .Stage }}</th>
-                    <th>{{ .Attribute }}</th>
-                    <th>{{ .PriorEvolution }}</th>
-                    <th>{{ .NextEvolution }}</th>
-                </tr>
-            {{end}}
+            {{ if eq .IsPokemon true }}
+                {{range .list }}
+                    <tr>
+                        <td>{{ .ID }}</td>
+                        <td>{{ .Name }}</td>
+                        <td>{{ .Ability }}</td>
+                        <td>{{ .Type }}</td>
+                        <td>{{ .PriorEvolution }}</td>
+                        <td>{{ .NextEvolution }}</td>
+                        <td><img height="100px" width="100px" src="{{ .Picture }}"></td>
+                    </tr>
+                {{end}}
+            {{ else }}
+                {{range .list }}
+                    <tr>
+                        <td>{{ .ID }}</td>
+                        <td>{{ .Name }}</td>
+                        <td>{{ .Level }}</td>
+                        <td>{{ .Stage }}</td>
+                        <td>{{ .Attribute }}</td>
+                        <td>{{ .PriorEvolution }}</td>
+                        <td>{{ .NextEvolution }}</td>
+                        <td><img height="100px" width="100px" src="{{ .Picture }}"></td>
+                    </tr>
+                {{end}}
+            {{ end }}
         </tbody>
     </table>
 {{ end }}
