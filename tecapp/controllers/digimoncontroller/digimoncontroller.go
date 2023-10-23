@@ -61,9 +61,10 @@ func GetDigimonJSONByID(c *gin.Context) {
 }
 
 func Index(c *gin.Context) {
-	// list all digimons with an html template
-}
-
-func GetDigimons(c *gin.Context) {
-	// list all digimons with an html template
+	// find a digimon and return it in an html template
+	c.HTML(
+		http.StatusOK,
+		"index.html",
+		gin.H{"title": "Digimon", "list": digimon.Digimons.Get()},
+	)
 }

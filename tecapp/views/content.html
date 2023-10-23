@@ -1,1 +1,35 @@
-<h1>Hello Gin!</h1>
+{{ if eq .IsWelcome true }}
+    <br>
+    <h3>Hello {{ .title }}!!</h3>
+{{ else }}
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                {{ if eq .IsPokemon true }}
+                <th>ID</th>
+                <th>Name</th>
+                <th>Level</th>
+                <th>Stage</th>
+                <th>Attribute</th>
+                <th>Prior Evolution</th>
+                <th>Next Evolution</th>
+                {{ else }}
+                {{end}}
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Add more rows as needed -->
+            {{range .list }}
+                <tr>
+                    <th>{{ .ID }}</th>
+                    <th>{{ .Name }}</th>
+                    <th>{{ .Level }}</th>
+                    <th>{{ .Stage }}</th>
+                    <th>{{ .Attribute }}</th>
+                    <th>{{ .PriorEvolution }}</th>
+                    <th>{{ .NextEvolution }}</th>
+                </tr>
+            {{end}}
+        </tbody>
+    </table>
+{{ end }}

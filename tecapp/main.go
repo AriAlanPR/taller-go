@@ -4,6 +4,7 @@ package main
 import (
 	"net/http"
 	"tecapp/controllers/digimoncontroller"
+	"tecapp/controllers/pokemoncontroller"
 
 	"github.com/gin-gonic/gin"
 )
@@ -21,7 +22,7 @@ func main() {
 		c.HTML(
 			http.StatusOK,
 			"index.html",
-			gin.H{"title": "TecApp"},
+			gin.H{"title": "TecApp", "IsWelcome": true},
 		)
 	})
 
@@ -29,8 +30,6 @@ func main() {
 	//define digimons HTML routes
 	//route to get main digimons view
 	router.GET("/digimons", digimoncontroller.Index)
-	//route to get a specific digimon view by id
-	router.GET("/digimons/:id", digimoncontroller.Index)
 
 	//define digimons JSON routes
 	// Use the GET function to associate the GET HTTP method and /digimons path with a handler function.
@@ -44,18 +43,18 @@ func main() {
 	//Pokemons Routes
 	//define pokemons HTML routes
 	//route to get main pokemons view
-	router.GET("/pokemons", digimoncontroller.Index)
+	router.GET("/pokemons", pokemoncontroller.Index)
 	//route to get a specific pokemon view by id
-	router.GET("/pokemons/:id", digimoncontroller.Index)
+	router.GET("/pokemons/:id", pokemoncontroller.Index)
 
 	//define digimons JSON routes
 	// Use the GET function to associate the GET HTTP method and /pokemons path with a handler function.
-	router.GET("/pokemons/json", digimoncontroller.GetDigimonsJSON)
+	router.GET("/pokemons/json", pokemoncontroller.GetDigimonsJSON)
 	// Associate the /digimons/:id path with the getPokemonByID function. In Gin, the colon preceding an item in the
 	// path signifies that the item is a path parameter.
-	router.GET("/pokemons/json/:id", digimoncontroller.GetDigimonJSONByID)
+	router.GET("/pokemons/json/:id", pokemoncontroller.GetDigimonJSONByID)
 	// Associate the POST method at the /pokemons path with the postDigimons function.
-	router.POST("/pokemons/json", digimoncontroller.PostDigimon)
+	router.POST("/pokemons/json", pokemoncontroller.PostDigimon)
 
 	//Start and run the server
 	router.Run("localhost:3000")
