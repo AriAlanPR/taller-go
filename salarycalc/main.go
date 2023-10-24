@@ -19,4 +19,16 @@ func main() {
 	str := f.toString()
 	fmt.Println(gross.GrossSalary())
 	fmt.Println("Basic salary: " + str)
+
+	str := "Hello, World!"
+    pattern := "Hello"
+
+    matched, err := regexp.MatchString(pattern, str)
+    if matched {
+        fmt.Println("Pattern matched")
+    } else {
+        fmt.Println("Pattern not matched")
+    }
+
+	fmt.Println(err)
 }
