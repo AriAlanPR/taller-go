@@ -1,4 +1,4 @@
-contar consonantes, vocales y digitos
+contar mayusculas, minusculas y digitos
 identificar si una cadena es una contraseña
 dibujar arbolito
 ordenar nombres alfabeticamente

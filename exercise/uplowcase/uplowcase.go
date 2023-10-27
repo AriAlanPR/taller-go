@@ -5,21 +5,11 @@ import (
 )
 
 // finds and returns the number of uppercase, lowercase and digits in a string.
-func FindUpperAndLowerCases(name string) (upper, lower, digits int) {
+func FindUpperAndLowerCases(name string) (upper, lower, digits, other int) {
 	upper = 0
 	lower = 0
 	digits = 0
-
-	//another way of regexp is regexp.MatchString(pattern, string)
-	// if matched, _ := regexp.MatchString(uppercase, string(char)); matched {
-	// 	upper++
-	// } else if matched, _ := regexp.MatchString(lowercase, string(char)); matched {
-	// 	lower++
-	// } else if matched, _ := regexp.MatchString(digit, string(char)); matched {
-	// 	digits++
-	// }
-	//other way is using package unicode and function IsLower and isUpper
-	//example: unicode.IsLower(char)
+	other = 0
 
 	uppercase := regexp.MustCompile(`^[A-Z]$`)
 	lowercase := regexp.MustCompile(`^[a-z]$`)
@@ -33,8 +23,16 @@ func FindUpperAndLowerCases(name string) (upper, lower, digits int) {
 			lower++
 		case digit.MatchString(string(char)):
 			digits++
+		default:
+			other++
 		}
 
 	}
-	return upper, lower, digits
+	return upper, lower, digits, other
+}
+
+func IsValidPassword(name string) bool {
+	upper, lower, digits, other := FindUpperAndLowerCases(name)
+
+	return upper >= 1 && lower >= 1 && digits >= 1 && other == 0
 }
