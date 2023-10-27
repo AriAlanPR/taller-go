@@ -7,10 +7,6 @@ import (
 	"github.com/gofiber/fiber"
 )
 
-func helloWorld(c *fiber.Ctx) {
-	c.Send("Hello, World!")
-}
-
 func main() {
 	app := fiber.New()
 	db.Init()

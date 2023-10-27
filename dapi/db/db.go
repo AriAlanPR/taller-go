@@ -1,11 +1,11 @@
 package db
 
 import (
-	"dapi/models"
+	"dapi/db/digimon"
 	"fmt"
 
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/sqlite"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
 var (
@@ -14,15 +14,19 @@ var (
 
 func Init() {
 	var err error
-	DBConn, err = gorm.Open("sqlite3", "digimons.db")
+	dsn := "root:1234@tcp(127.0.0.1:3306)/digimon?charset=utf8mb4&parseTime=True&loc=Local"
+	DBConn, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
+		fmt.Println(err)
 		panic("failed to connect database")
 	}
 	fmt.Println("Connection Opened to Database")
-	DBConn.AutoMigrate(&models.Digimon{})
+	DBConn.AutoMigrate(&digimon.Digimon{})
 	fmt.Println("Database Migrated")
 }
 
 func Close() {
-	DBConn.Close()
+	if sqlDB, err := DBConn.DB(); err == nil {
+		sqlDB.Close()
+	}
 }

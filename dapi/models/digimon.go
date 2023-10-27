@@ -2,20 +2,12 @@ package models
 
 import (
 	"dapi/db"
+	"dapi/db/digimon"
 
-	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 )
 
-type Digimon struct {
-	gorm.Model
-	ID        int    `json:"id"`
-	Name      string `json:"name"`
-	Stage     string `json:"stage"`
-	Attribute string `json:"attribute"`
-	Picture   string `json:"picture"`
-}
-
+type Digimon digimon.Digimon
 type DigimonList []Digimon
 
 // digimons slice to seed record digimon data.
